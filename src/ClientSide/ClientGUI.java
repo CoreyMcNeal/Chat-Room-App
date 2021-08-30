@@ -42,6 +42,7 @@ public class ClientGUI implements ActionListener {
 
         frame.add(introPanel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
         frame.setTitle("JChat Application");
         frame.setSize(400, 500);
         frame.setVisible(true);
