@@ -65,12 +65,23 @@ public class ClientGUI implements ActionListener {
     private void buildChatPanel() {
         chatPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         chatPanel.setLayout(new GridLayout(0, 1));
+        chatPanel.setVisible(false);
         
+    }
+
+    private void showChatPanel() {
+        introPanel.setVisible(false);
+        frame.remove(introPanel);
+
+        frame.add(chatPanel, BorderLayout.CENTER);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
+        
+        if (e.getSource() == introConnectButton) {
+            showChatPanel();
+        }
         
     }
 }
