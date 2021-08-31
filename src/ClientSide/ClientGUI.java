@@ -10,6 +10,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 public class ClientGUI implements ActionListener {
@@ -21,7 +23,8 @@ public class ClientGUI implements ActionListener {
     private JLabel introLabel;
 
     private JPanel chatPanel;                   // chat screen...
-    
+    private JTextArea chatArea;
+    private JScrollPane scrollPane;
     
     public ClientGUI() {
         
@@ -65,15 +68,25 @@ public class ClientGUI implements ActionListener {
     private void buildChatPanel() {
         chatPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         chatPanel.setLayout(new GridLayout(0, 1));
-        chatPanel.setVisible(false);
+
+        chatArea = new JTextArea();
+        scrollPane = new JScrollPane(chatArea);
+        chatArea.setEditable(false);
         
+        chatPanel.add(scrollPane);
     }
 
     private void showChatPanel() {
-        introPanel.setVisible(false);
-        frame.remove(introPanel);
 
+        frame.remove(introPanel);
         frame.add(chatPanel, BorderLayout.CENTER);
+
+        refreshFrame();
+    }
+
+    private void refreshFrame() {
+        frame.revalidate();
+        frame.repaint();
     }
 
     @Override
