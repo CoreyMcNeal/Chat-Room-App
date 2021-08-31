@@ -81,6 +81,7 @@ public class ClientGUI implements ActionListener {
         introPanel.add(introNameLabel, constraints);
 
         introNameEntry = new JTextField();
+        introNameEntry.addActionListener(this);
         constraints.gridx = 0;
         constraints.gridy = 2;
         introNameEntry.setPreferredSize(new Dimension(200, 20));
@@ -160,7 +161,7 @@ public class ClientGUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {   // Events for each respective Button pressed
         
-        if (e.getSource() == introConnectButton) {
+        if (e.getSource() == introConnectButton || e.getSource() == introNameEntry) {
             createClient();
 
         } else if (e.getSource() == chatEntry) {
