@@ -11,14 +11,14 @@ public class ChatListenerAndPusher implements Runnable {
     private Socket clientChatSocket;
     private Server server;
 
-    public ChatListenerAndPusher(Socket clientChatSocket,Server server) {
+    public ChatListenerAndPusher(Socket clientChatSocket,Server server) {  
         this.clientChatSocket = clientChatSocket;
         this.server = server;
     }
 
 
     @Override
-    public void run() {
+    public void run() {                             // Listens for client output, and sends the message to all the clients connected.
         BufferedReader inFromClient;
         try {
             while (true) {

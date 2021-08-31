@@ -18,8 +18,8 @@ public class ClientLogic implements Runnable {
     private BufferedReader inFromServerChat;
     private PrintWriter outToServerChat;
 
-    public ClientLogic(String name, ClientGUI gui, String hostIP) throws IOException {
-        this.chatConnection = new Socket(hostIP, 9999);
+    public ClientLogic(String name, ClientGUI gui, String hostIP) throws IOException {      // establishes connection to server
+        this.chatConnection = new Socket(hostIP, 9999);                                    
         this.name = name;
         this.gui = gui;
 
@@ -27,13 +27,13 @@ public class ClientLogic implements Runnable {
         this.outToServerChat = new PrintWriter(this.chatConnection.getOutputStream(), true);
     }
 
-    public void sendMessage(String message) throws IOException {
+    public void sendMessage(String message) throws IOException {            // sends the username and message to the server
         this.outToServerChat.println(this.name + " says: " + message);
     }
 
     @Override
-    public void run() {
-        try {
+    public void run() {                                                     // Grabbing messages from the server
+        try {                                                               // continuous, using threading
             while (true) {
                 String receivedMessage = this.inFromServerChat.readLine();
                 if (receivedMessage == null) {

@@ -36,8 +36,8 @@ public class ClientGUI implements ActionListener {
     GridBagConstraints constraints;
 
     private JPanel chatPanel;                   // chat screen, with JTextField for chat messages, an entry box for
-    private JLabel chatWelcomeLabel;
-    private JTextArea chatArea;                 // inputs, and an exit button.
+    private JLabel chatWelcomeLabel;            // inputs, and an exit button.
+    private JTextArea chatArea;                 
     private JScrollPane scrollPane;
     private JTextField chatEntry;
     private JButton exitButton;

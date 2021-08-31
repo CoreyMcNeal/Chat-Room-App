@@ -7,7 +7,7 @@ public class ServerApp {
 
         Server serverForChat = new Server();
 
-        while (true) {
+        while (true) {                                      // Waiting for connections from clients
             System.out.println("Waiting for Client...");
             serverForChat.makeConnection();
             System.out.println("Connected!\n\n");

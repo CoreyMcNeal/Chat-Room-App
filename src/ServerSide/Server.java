@@ -18,28 +18,19 @@ public class Server {
         this.chatSocket = new ServerSocket(9999);
     }
 
-    public void sendMessage(String message) throws IOException {
-        for (Socket clientSocket: chatClientConnections) {
+    public void sendMessage(String message) throws IOException {          // Writes the given message to all clients chatboxes
+        for (Socket clientSocket: chatClientConnections) {                
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
             writer.println(message);
         }
     }
 
-    public void makeConnection() throws IOException {
-        Socket clientChatSocket = this.chatSocket.accept();
+    public void makeConnection() throws IOException {                     // Establishes connection with the client, and starts
+        Socket clientChatSocket = this.chatSocket.accept();               // a thread to handle the listening for client output
         chatClientConnections.add(clientChatSocket);
 
         ChatListenerAndPusher handler = new ChatListenerAndPusher(clientChatSocket, this);
         ExecutorService thread = Executors.newFixedThreadPool(1);
         thread.execute(handler);
     }
-
-    public void connectingLoop(int numberOfThreads) throws IOException {
-        int i = 0;
-        while (i < numberOfThreads) {
-            makeConnection();
-            i++;
-        }
-    }
-    
 }
