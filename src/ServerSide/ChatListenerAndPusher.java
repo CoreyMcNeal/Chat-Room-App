@@ -29,7 +29,7 @@ public class ChatListenerAndPusher implements Runnable {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Problem listening or pushing to client");
+            JOptionPane.showMessageDialog(null, "Client connection closed.");
         }
         
     }

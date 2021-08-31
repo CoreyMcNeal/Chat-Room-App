@@ -29,8 +29,9 @@ public class ClientGUI implements ActionListener {
     private JPanel introPanel;                  // introductory screen, with button to connect to server
     private JButton introConnectButton;
     private JLabel introLabel;
-    private JLabel introNameLabel;
+    private JLabel introIPLabel;
     private JTextField introIPEntry;
+    private JLabel introNameLabel;
     private JTextField introNameEntry;
     GridBagConstraints constraints;
 
@@ -76,10 +77,10 @@ public class ClientGUI implements ActionListener {
         constraints.ipady = 10;
         introPanel.add(introLabel, constraints);
 
-        introNameLabel = new JLabel("Enter Username: ");
+        introIPLabel = new JLabel("Enter Server IP: ");
         constraints.gridx = 0;
         constraints.gridy = 1;
-        introPanel.add(introNameLabel, constraints);
+        introPanel.add(introIPLabel, constraints);
 
         introIPEntry = new JTextField();
         constraints.gridx = 0;
@@ -87,10 +88,15 @@ public class ClientGUI implements ActionListener {
         introIPEntry.setPreferredSize(new Dimension(200, 20));
         introPanel.add(introIPEntry, constraints);
 
+        introNameLabel = new JLabel("Enter Username: ");
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        introPanel.add(introNameLabel, constraints);
+
         introNameEntry = new JTextField();
         introNameEntry.addActionListener(this);
         constraints.gridx = 0;
-        constraints.gridy = 3;
+        constraints.gridy = 4;
         introNameEntry.setPreferredSize(new Dimension(200, 20));
         introPanel.add(introNameEntry, constraints);
         
@@ -98,7 +104,7 @@ public class ClientGUI implements ActionListener {
         introConnectButton = new JButton("Connect to Server");
         introConnectButton.addActionListener(this);
         constraints.gridx = 0;
-        constraints.gridy = 4;
+        constraints.gridy = 5;
         introConnectButton.setPreferredSize(new Dimension(200, 100));
         introPanel.add(introConnectButton, constraints);
     }
