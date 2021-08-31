@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,6 +23,8 @@ import javax.swing.SwingConstants;
 public class ClientGUI implements ActionListener {
     
     private JFrame frame;
+    private ClientLogic clientLogic;
+    private ExecutorService thread = Executors.newFixedThreadPool(1);
 
     private JPanel introPanel;                  // introductory screen, with button to connect to server
     private JButton introConnectButton;
@@ -98,29 +102,27 @@ public class ClientGUI implements ActionListener {
         chatConstraints = new GridBagConstraints();
 
         chatWelcomeLabel = new JLabel("Connected to Chat!");
-        chatArea = new JTextArea();
-        scrollPane = new JScrollPane(chatArea);
-        chatEntry = new JTextField();
-        exitButton = new JButton("Exit");
-
-        chatEntry.addActionListener(this);
-        exitButton.addActionListener(this);
-        chatArea.setEditable(false);
-
         chatConstraints.gridx = 0;
         chatConstraints.gridy = 0;
         chatPanel.add(chatWelcomeLabel, chatConstraints);
 
+        chatArea = new JTextArea();
+        scrollPane = new JScrollPane(chatArea);
+        chatArea.setEditable(false);
         chatConstraints.gridx = 0;
         chatConstraints.gridy = 1;
         scrollPane.setPreferredSize(new Dimension(500, 375));
         chatPanel.add(scrollPane, chatConstraints);
 
+        chatEntry = new JTextField();
+        chatEntry.addActionListener(this);
         chatConstraints.gridx = 0;
         chatConstraints.gridy = 2;
         chatEntry.setPreferredSize(new Dimension(350, 50));
         chatPanel.add(chatEntry, chatConstraints);
 
+        exitButton = new JButton("Exit");
+        exitButton.addActionListener(this);
         chatConstraints.gridx = 0;
         chatConstraints.gridy = 3;
         exitButton.setPreferredSize(new Dimension(100, 50));
@@ -136,6 +138,10 @@ public class ClientGUI implements ActionListener {
         refreshFrame();
     }
 
+    public void addToChat(String chatMessage) {
+        chatArea.append(chatMessage + "\n");
+    }
+
     private void refreshFrame() {           // Refreshes the frame so changes can be seen
         frame.revalidate();
         frame.repaint();
@@ -143,7 +149,8 @@ public class ClientGUI implements ActionListener {
 
     private void createClient() {          // Creates the Client side connection
         try {
-            ClientLogic clientLogic = new ClientLogic(introNameEntry.getText());
+            clientLogic = new ClientLogic(introNameEntry.getText(), this);
+            thread.execute(clientLogic);
             showChatPanel();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Couldn't Connect to Server");
@@ -157,12 +164,17 @@ public class ClientGUI implements ActionListener {
             createClient();
 
         } else if (e.getSource() == chatEntry) {
-            // Add Client to Server code here
+            try {
+                clientLogic.sendMessage(chatEntry.getText());
+            } catch (Exception p) {
+                JOptionPane.showMessageDialog(null, "Couldn't send message.");
+            }
             chatEntry.setText("");
 
         } else if (e.getSource() == exitButton) {
             frame.dispose();
             System.exit(0);
+
         }
     }
 }
