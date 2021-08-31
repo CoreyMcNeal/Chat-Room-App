@@ -22,3 +22,6 @@ When done, close the program by using the Exit button, or clicking the X of the 
   - Java Swing Framework
   - Java Sockets and ServerSockets
   - Reading Java Inputs and Outputs over a socket connection
+
+## Future
+  - Improve from connecting over LAN, to connecting clients over the internet
