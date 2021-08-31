@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -29,6 +30,7 @@ public class ClientGUI implements ActionListener {
     GridBagConstraints constraints;
 
     private JPanel chatPanel;                   // chat screen, with JTextField for chat messages, an entry box for
+    private JLabel chatWelcomeLabel;
     private JTextArea chatArea;                 // inputs, and an exit button.
     private JScrollPane scrollPane;
     private JTextField chatEntry;
@@ -95,6 +97,7 @@ public class ClientGUI implements ActionListener {
         chatPanel.setLayout(new GridBagLayout());
         chatConstraints = new GridBagConstraints();
 
+        chatWelcomeLabel = new JLabel("Connected to Chat!");
         chatArea = new JTextArea();
         scrollPane = new JScrollPane(chatArea);
         chatEntry = new JTextField();
@@ -106,16 +109,20 @@ public class ClientGUI implements ActionListener {
 
         chatConstraints.gridx = 0;
         chatConstraints.gridy = 0;
+        chatPanel.add(chatWelcomeLabel, chatConstraints);
+
+        chatConstraints.gridx = 0;
+        chatConstraints.gridy = 1;
         scrollPane.setPreferredSize(new Dimension(500, 375));
         chatPanel.add(scrollPane, chatConstraints);
 
         chatConstraints.gridx = 0;
-        chatConstraints.gridy = 1;
+        chatConstraints.gridy = 2;
         chatEntry.setPreferredSize(new Dimension(350, 50));
         chatPanel.add(chatEntry, chatConstraints);
 
         chatConstraints.gridx = 0;
-        chatConstraints.gridy = 2;
+        chatConstraints.gridy = 3;
         exitButton.setPreferredSize(new Dimension(100, 50));
         chatPanel.add(exitButton, chatConstraints);
     }
@@ -134,15 +141,25 @@ public class ClientGUI implements ActionListener {
         frame.repaint();
     }
 
+    private void createClient() {          // Creates the Client side connection
+        try {
+            ClientLogic clientLogic = new ClientLogic(introNameEntry.getText());
+            showChatPanel();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Couldn't Connect to Server");
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {   // Events for each respective Button pressed
         
         if (e.getSource() == introConnectButton) {
-            showChatPanel();
+            createClient();
+
         } else if (e.getSource() == chatEntry) {
             // Add Client to Server code here
-
             chatEntry.setText("");
+
         } else if (e.getSource() == exitButton) {
             frame.dispose();
             System.exit(0);

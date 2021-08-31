@@ -17,10 +17,12 @@ public class ClientLogic implements Runnable {
 
     private BufferedReader keyboardInput = new BufferedReader(new InputStreamReader(System.in));
 
-    public ClientLogic() throws IOException {
+    public ClientLogic(String name) throws IOException {
         this.chatConnection = new Socket("localhost", 9999);
+        this.name = name;
 
         this.inFromServerChat = new BufferedReader(new InputStreamReader(this.chatConnection.getInputStream()));
+        this.outToServerChat = new PrintWriter(this.chatConnection.getOutputStream(), true);
         
     }
 

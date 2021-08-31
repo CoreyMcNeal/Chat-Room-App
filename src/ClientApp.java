@@ -1,4 +1,4 @@
-package ClientSide;
+import ClientSide.ClientGUI;
 
 public class ClientApp {
     
@@ -6,4 +6,5 @@ public class ClientApp {
         ClientGUI clientInterface = new ClientGUI();
         clientInterface.start();
     }
+    
 }
