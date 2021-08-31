@@ -18,8 +18,8 @@ public class ClientLogic implements Runnable {
     private BufferedReader inFromServerChat;
     private PrintWriter outToServerChat;
 
-    public ClientLogic(String name, ClientGUI gui) throws IOException {
-        this.chatConnection = new Socket("localhost", 9999);
+    public ClientLogic(String name, ClientGUI gui, String hostIP) throws IOException {
+        this.chatConnection = new Socket(hostIP, 9999);
         this.name = name;
         this.gui = gui;
 

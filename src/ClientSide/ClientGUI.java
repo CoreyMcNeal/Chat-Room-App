@@ -30,6 +30,7 @@ public class ClientGUI implements ActionListener {
     private JButton introConnectButton;
     private JLabel introLabel;
     private JLabel introNameLabel;
+    private JTextField introIPEntry;
     private JTextField introNameEntry;
     GridBagConstraints constraints;
 
@@ -80,10 +81,16 @@ public class ClientGUI implements ActionListener {
         constraints.gridy = 1;
         introPanel.add(introNameLabel, constraints);
 
+        introIPEntry = new JTextField();
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        introIPEntry.setPreferredSize(new Dimension(200, 20));
+        introPanel.add(introIPEntry, constraints);
+
         introNameEntry = new JTextField();
         introNameEntry.addActionListener(this);
         constraints.gridx = 0;
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         introNameEntry.setPreferredSize(new Dimension(200, 20));
         introPanel.add(introNameEntry, constraints);
         
@@ -91,7 +98,7 @@ public class ClientGUI implements ActionListener {
         introConnectButton = new JButton("Connect to Server");
         introConnectButton.addActionListener(this);
         constraints.gridx = 0;
-        constraints.gridy = 3;
+        constraints.gridy = 4;
         introConnectButton.setPreferredSize(new Dimension(200, 100));
         introPanel.add(introConnectButton, constraints);
     }
@@ -150,7 +157,7 @@ public class ClientGUI implements ActionListener {
 
     private void createClient() {          // Creates the Client side connection
         try {
-            clientLogic = new ClientLogic(introNameEntry.getText(), this);
+            clientLogic = new ClientLogic(introNameEntry.getText(), this, introIPEntry.getText());
             thread.execute(clientLogic);
             showChatPanel();
         } catch (Exception e) {
