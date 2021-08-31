@@ -39,6 +39,7 @@ public class ClientGUI implements ActionListener {
     private JLabel chatWelcomeLabel;            // inputs, and an exit button.
     private JTextArea chatArea;                 
     private JScrollPane scrollPane;
+    private JLabel chatMessageHereLabel;
     private JTextField chatEntry;
     private JButton exitButton;
     GridBagConstraints chatConstraints;
@@ -128,17 +129,22 @@ public class ClientGUI implements ActionListener {
         scrollPane.setPreferredSize(new Dimension(500, 375));
         chatPanel.add(scrollPane, chatConstraints);
 
+        chatMessageHereLabel = new JLabel("Enter your message below:");
+        chatConstraints.gridx = 0;
+        chatConstraints.gridy = 2;
+        chatPanel.add(chatMessageHereLabel, chatConstraints);
+
         chatEntry = new JTextField();
         chatEntry.addActionListener(this);
         chatConstraints.gridx = 0;
-        chatConstraints.gridy = 2;
+        chatConstraints.gridy = 3;
         chatEntry.setPreferredSize(new Dimension(350, 50));
         chatPanel.add(chatEntry, chatConstraints);
 
         exitButton = new JButton("Exit");
         exitButton.addActionListener(this);
         chatConstraints.gridx = 0;
-        chatConstraints.gridy = 3;
+        chatConstraints.gridy = 4;
         exitButton.setPreferredSize(new Dimension(100, 50));
         chatPanel.add(exitButton, chatConstraints);
     }
