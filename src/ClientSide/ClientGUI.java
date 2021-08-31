@@ -1,16 +1,16 @@
 package ClientSide;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
 
-import javax.swing.JLabel;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,24 +24,22 @@ public class ClientGUI implements ActionListener {
     private JPanel introPanel;                  // introductory screen, with button to connect to server
     private JButton introConnectButton;
     private JLabel introLabel;
+    private JLabel introNameLabel;
+    private JTextField introNameEntry;
     GridBagConstraints constraints;
 
-    private JPanel chatPanel;                   // chat screen...
-    private JTextArea chatArea;
+    private JPanel chatPanel;                   // chat screen, with JTextField for chat messages, an entry box for
+    private JTextArea chatArea;                 // inputs, and an exit button.
     private JScrollPane scrollPane;
     private JTextField chatEntry;
     private JButton exitButton;
     GridBagConstraints chatConstraints;
-    
-    public ClientGUI() {
-        
-    }
 
     public void start() {
         buildPanels();
     }
 
-    private void buildPanels() {
+    private void buildPanels() {               // Creates the frame and two panels.
         frame = new JFrame();
 
         introPanel = new JPanel();
@@ -58,30 +56,41 @@ public class ClientGUI implements ActionListener {
         frame.setVisible(true);
     }
 
-    private void buildIntroPanel() {
-        introLabel = new JLabel("Welcome to the JChat Application!", SwingConstants.CENTER);
-
-        introConnectButton = new JButton("Connect to Server");
-
-        introConnectButton.addActionListener(this);
+    private void buildIntroPanel() {                    //Builds introPanel
 
         introPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
         introPanel.setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
 
-        
+
+        introLabel = new JLabel("Welcome to the JChat Application!", SwingConstants.CENTER);
         constraints.gridx = 0;
         constraints.gridy = 0;
+        constraints.ipady = 10;
         introPanel.add(introLabel, constraints);
 
-    
+        introNameLabel = new JLabel("Enter Username: ");
         constraints.gridx = 0;
         constraints.gridy = 1;
+        introPanel.add(introNameLabel, constraints);
+
+        introNameEntry = new JTextField();
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        introNameEntry.setPreferredSize(new Dimension(200, 20));
+        introPanel.add(introNameEntry, constraints);
+        
+
+        introConnectButton = new JButton("Connect to Server");
+        introConnectButton.addActionListener(this);
+        constraints.gridx = 0;
+        constraints.gridy = 3;
         introConnectButton.setPreferredSize(new Dimension(200, 100));
         introPanel.add(introConnectButton, constraints);
     }
 
-    private void buildChatPanel() {
+    private void buildChatPanel() {                         // Builds chatPanel
+
         chatPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
         chatPanel.setLayout(new GridBagLayout());
         chatConstraints = new GridBagConstraints();
@@ -111,7 +120,7 @@ public class ClientGUI implements ActionListener {
         chatPanel.add(exitButton, chatConstraints);
     }
 
-    private void showChatPanel() {
+    private void showChatPanel() {                          // Transitions to the chatPanel
 
         frame.remove(introPanel);
         frame.add(chatPanel, BorderLayout.CENTER);
@@ -120,19 +129,19 @@ public class ClientGUI implements ActionListener {
         refreshFrame();
     }
 
-    private void refreshFrame() {
+    private void refreshFrame() {           // Refreshes the frame so changes can be seen
         frame.revalidate();
         frame.repaint();
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {   // Events for each respective Button pressed
         
         if (e.getSource() == introConnectButton) {
             showChatPanel();
         } else if (e.getSource() == chatEntry) {
             // Add Client to Server code here
-            
+
             chatEntry.setText("");
         } else if (e.getSource() == exitButton) {
             frame.dispose();
