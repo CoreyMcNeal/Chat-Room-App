@@ -13,7 +13,7 @@ The Client program will ask for two things:
   - IP Address (The Host device IP)
   - Username (Which identifies the user in chat)
 
-Once the IP and Username are submitted under the correct parameters, the user will enter a chatroom with other clients connected to the same IP under the same Local Area Network
+Once the IP and Username are submitted under the correct parameters, the user will enter a chatroom with other clients connected to the same IP under the same Local Area Network.
 
 When done, close the program by using the Exit button, or clicking the X of the window.
 
