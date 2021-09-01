@@ -20,11 +20,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class ClientGUI implements ActionListener {
+public class ClientGUI implements ActionListener, Runnable {
     
     private JFrame frame;
     private ClientLogic clientLogic;
-    private ExecutorService thread = Executors.newFixedThreadPool(1);
+    private ExecutorService thread = Executors.newFixedThreadPool(2);
+    JOptionPane connectingWindow = new JOptionPane();
 
     private JPanel introPanel;                  // introductory screen, with button to connect to server
     private JButton introConnectButton;
@@ -33,7 +34,7 @@ public class ClientGUI implements ActionListener {
     private JTextField introIPEntry;
     private JLabel introNameLabel;
     private JTextField introNameEntry;
-    GridBagConstraints constraints;
+    private GridBagConstraints constraints;
 
     private JPanel chatPanel;                   // chat screen, with JTextField for chat messages, an entry box for
     private JLabel chatWelcomeLabel;            // inputs, and an exit button.
@@ -42,7 +43,7 @@ public class ClientGUI implements ActionListener {
     private JLabel chatMessageHereLabel;
     private JTextField chatEntry;
     private JButton exitButton;
-    GridBagConstraints chatConstraints;
+    private GridBagConstraints chatConstraints;
 
     public void start() {
         buildPanels();
@@ -167,23 +168,16 @@ public class ClientGUI implements ActionListener {
         frame.repaint();
     }
 
-    private void createClient() {          // Creates the Client side connection
-        try {
-            clientLogic = new ClientLogic(introNameEntry.getText(), this, introIPEntry.getText());
-            thread.execute(clientLogic);
-            showChatPanel();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Couldn't Connect to Server");
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {   // Events for each respective Button pressed
         
         if (e.getSource() == introConnectButton || e.getSource() == introNameEntry) {
-            createClient();
+            introConnectButton.setText("Connecting...");
+            refreshFrame();
+            thread.execute(this);
 
         } else if (e.getSource() == chatEntry) {
+
             try {
                 clientLogic.sendMessage(chatEntry.getText());
             } catch (Exception p) {
@@ -195,6 +189,20 @@ public class ClientGUI implements ActionListener {
             frame.dispose();
             System.exit(0);
 
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            clientLogic = new ClientLogic(introNameEntry.getText(), this, introIPEntry.getText());
+            thread.execute(clientLogic);
+            showChatPanel();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Couldn't Connect to Server");
+            introConnectButton.setText("Connect to Server");
+            refreshFrame();
         }
     }
 }

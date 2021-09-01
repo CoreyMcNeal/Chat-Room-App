@@ -33,7 +33,7 @@ public class ClientLogic implements Runnable {
 
     @Override
     public void run() {                                                     // Grabbing messages from the server
-        try {                                                               // continuous, using threading
+        try {                                                               // continuously, using threading
             while (true) {
                 String receivedMessage = this.inFromServerChat.readLine();
                 if (receivedMessage == null) {
