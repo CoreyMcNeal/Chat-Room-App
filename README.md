@@ -25,3 +25,4 @@ When done, close the program by using the Exit button, or clicking the X of the 
 
 ## Future
   - Improve from connecting over LAN, to connecting clients over the internet
+  - Add ability to send files over chat room connection
